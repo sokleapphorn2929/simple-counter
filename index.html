@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Practice</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="vh-100 bg-light">
+      <div class="d-flex justify-content-center align-items-center h-100">
+        <div class="bg-dark shadow d-inline-block p-md-5 p-3 w-auto rounded">
+          <h1 class="text-center text-light">
+            Counter : <span id="count" class="text-warning">0</span>
+          </h1>
+          <div class="d-flex gap-2 justify-content-center mt-5">
+            <button class="btn btn-danger" onclick="increase()">
+              <span class="h2">+</span>
+            </button>
+            <button class="btn btn-warning" onclick="decrease()">
+              <span class="h2">-</span>
+            </button>
+          </div>
+          <div class="d-flex gap-2 justify-content-center mt-2">
+            <button class="btn btn-outline-success" onclick="start_i()">
+              <span class="h2">auto+</span>
+            </button>
+            <button class="btn btn-outline-success" onclick="start_d()">
+              <span class="h2">auto-</span>
+            </button>
+            <button class="btn btn-outline-danger" onclick="stop()">
+              <span class="h2">stop</span>
+            </button>
+          </div>
+          <div class="d-flex gap-2 justify-content-center mt-2">
+            <button class="btn btn-outline-danger" onclick="reset()">
+              <span class="h2">reset</span>
+            </button>
+            <button class="btn btn-outline-secondary" onclick="save()">
+              <span class="h2">save</span>
+            </button>
+            <button class="btn btn-outline-secondary" onclick="load()">
+              <span class="h2">load</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      let c = 0;
+
+      function count_update() {
+        document.getElementById("count").innerHTML = c;
+      }
+
+      function increase() {
+        c++;
+        count_update();
+      }
+
+      function decrease() {
+        c--;
+        count_update();
+      }
+
+      let timer = null;
+
+      function reset() {
+        clearTimeout(timer);
+        c = 0;
+        count_update();
+      }
+
+      function auto_i() {
+        c++;
+        count_update();
+        timer = setTimeout(auto_i, 100);
+      }
+
+      function start_i() {
+        clearTimeout(timer);
+        auto_i();
+      }
+
+      function auto_d() {
+        c--;
+        count_update();
+        timer = setTimeout(auto_d, 100);
+      }
+
+      function start_d() {
+        clearTimeout(timer);
+        auto_d();
+      }
+
+      function stop() {
+        clearTimeout(timer);
+      }
+
+      function save() {
+        localStorage.setItem("count", c);
+      }
+
+      function load() {
+        let saved = localStorage.getItem("count");
+        if (saved !== null) {
+          c = Number(saved);
+        }
+        count_update();
+      }
+    </script>
+  </body>
+</html>
